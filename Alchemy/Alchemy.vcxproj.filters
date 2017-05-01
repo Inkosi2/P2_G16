@@ -21,5 +21,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\..\Desktop\elements.dat" />
+    <None Include="elements.dat">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
