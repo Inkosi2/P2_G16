@@ -35,7 +35,7 @@ std::unordered_map <suma, std::string, pair_hash> elementos;
 
 void add(int elem) 
 {
-	list.insert(list.end(), list[elem]);
+	list.insert(list.end(), list[elem - 1]);
 }
 
 void add_basics()
@@ -82,13 +82,24 @@ void help()
 	//------ COUT de la interfaz ------
 	//---------------------------------
 
-	std::cout << "Alchemy";
+	std::cout << "Alchemy" << std::endl << std::endl;
 
 }
 
 void combine(int elem1, int elem2)
 {
+	suma resultado;
+	std::string sum;
 
+	resultado.first = list[elem1 - 1];
+	resultado.second = list[elem2 - 1];
+	
+	sum = elem1 + elem2;
+
+	list.insert(list.end(), sum);
+
+	del(elem2);
+	del(elem1);
 }
 
 void config()
@@ -135,9 +146,10 @@ int main()
 
 	config();
 	help();
+	combine(3, 4);
 	print();
 
-	while (true)
+	/*while (true)
 	{
 		std::cin >> func;
 		std::cout << std::endl;
@@ -207,7 +219,7 @@ int main()
 		}
 
 		print();
-	}
+	}*/
 
 	return 0;
 
