@@ -33,12 +33,12 @@ std::unordered_map <suma, std::string, pair_hash> elementos;
 
 //enum funciones { add, add_basics, del, info, sort, clean, help};
 
-void add(int elem) 
+void add(int elem) // Y
 {
 	list.insert(list.end(), list[elem - 1]);
 }
 
-void add_basics()
+void add_basics() //Y
 {
 	list.insert(list.end(), basics[0]);
 	list.insert(list.end(), basics[1]);
@@ -46,24 +46,25 @@ void add_basics()
 	list.insert(list.end(), basics[3]);
 }
 
-void del(int aux)
+void del(int aux) //Y
 {
 	list.erase(list.begin() + aux - 1);
 }
 
-void info(int elem)
+void info(int elem) //Y
 {
 	std::string url = "https://en.wikipedia.org/wiki/" + list[elem - 1];
 	ShellExecuteA(nullptr, "open", url.c_str(), nullptr, nullptr, SW_SHOWNORMAL);
 }
 
-void sort()
+void sort() //Y
 {
 	std::sort(list.begin(), list.end());
 }
 
-void clean()
+void clean() //Y
 {
+	sort();
 	for (int i = 0; i < list.size(); i++)
 	{
 		for (int j = i + 1; j < list.size(); j++)
@@ -76,7 +77,7 @@ void clean()
 	}
 }
 
-void help()
+void help() //Y
 {
 	//---------------------------------
 	//------ COUT de la interfaz ------
@@ -102,7 +103,7 @@ void combine(int elem1, int elem2)
 	del(elem1);
 }
 
-void config()
+void config() //Y
 {
 	std::string line;
 	
@@ -127,7 +128,7 @@ void config()
 	fentrada.close();
 }
 
-void print()
+void print() //Y
 {
 	for (int i = 0; i < list.size(); i++)
 	{
@@ -146,24 +147,31 @@ int main()
 
 	config();
 	help();
-	combine(3, 4);
+	//combine(3, 4);
 	print();
 
-	/*while (true)
+	while (true)
 	{
 		std::cin >> func;
 		std::cout << std::endl;
 
 		system("cls");
 
-		if (func == "add %d") 
+		if (func == "add") 
 		{
 			std::string num;
 			int num2;
-			num = func.substr(5, func.size() - 5);
+			std::cin >> num;
 			num2 = std::stoi(num);
-			
-			add(num2);
+
+			if (num2 <= list.size())
+			{
+				add(num2);
+			}
+			else
+			{
+				std::cout << "Entra otro elemento, el anterior es demasiado grande" << std::endl;
+			}
 
 		}
 		
@@ -172,21 +180,21 @@ int main()
 			add_basics();
 		}
 		
-		else if (func == "del %d")
+		else if (func == "del")
 		{
 			std::string num;
 			int num2;
-			num = func.substr(5, func.size() - 5);
+			std::cin >> num;
 			num2 = std::stoi(num);
 
 			del(num2);
 		}
 
-		else if (func == "info %d")
+		else if (func == "info")
 		{
 			std::string num;
 			int num2;
-			num = func.substr(6, func.size() - 6);
+			std::cin >> num;
 			num2 = std::stoi(num);
 
 			info(num2);
@@ -219,7 +227,7 @@ int main()
 		}
 
 		print();
-	}*/
+	}
 
 	return 0;
 
