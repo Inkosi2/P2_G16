@@ -40,10 +40,10 @@ void add(int elem)
 
 void add_basics()
 {
+	list.insert(list.end(), basics[0]);
 	list.insert(list.end(), basics[1]);
-	list.insert(list.end(), basics[21]);
+	list.insert(list.end(), basics[2]);
 	list.insert(list.end(), basics[3]);
-	list.insert(list.end(), basics[4]);
 }
 
 void del(int aux)
@@ -61,16 +61,19 @@ void sort()
 	std::sort(list.begin(), list.end());
 }
 
-//void clean()
-//{
-//	for (int i = 0; i < list.size(); i++)
-//	{
-//		for (int j = i + 1; j < list.size; j++)
-//		{
-//
-//		}
-//	}
-//}
+void clean()
+{
+	for (int i = 0; i < list.size(); i++)
+	{
+		for (int j = i + 1; j < list.size(); j++)
+		{
+			if (list[i] == list[j])
+			{
+				del(j);
+			}
+		}
+	}
+}
 
 void help()
 {
@@ -125,6 +128,11 @@ int main()
 	int sum1, sum2;
 
 	config();
+	add_basics();
+	//sort();
+	del(3);
+	clean();
+
 	print();
 
 
@@ -132,51 +140,73 @@ int main()
 	//------ COUT de la interfaz ------
 	//---------------------------------
 
-	//while (true)
-	//{
-	//	std::cin >> func;
-	//	std::cout << std::endl;
+	while (true)
+	{
+		std::cin >> func;
+		std::cout << std::endl;
 
-	//	if (func == "add %d") 
-	//	{
-	//		
-	//	}
-	//	
-	//	else if (func == "add basics")
-	//	{
+		if (func == "add %d") 
+		{
+			std::string num;
+			int num2;
+			num = func.substr(5, func.size() - 5);
+			num2 = std::stoi(num);
+			
+			add(num2);
 
-	//	}
-	//	
-	//	else if (func == "del")
-	//	{
+		}
+		
+		else if (func == "add basics")
+		{
+			add_basics();
+		}
+		
+		else if (func == "del %d")
+		{
+			std::string num;
+			int num2;
+			num = func.substr(5, func.size() - 5);
+			num2 = std::stoi(num);
 
-	//	}
+			del(num2);
+		}
 
-	//	/*else if (func == "info " + aux)
-	//	{
+		else if (func == "info %d")
+		{
+			std::string num;
+			int num2;
+			num = func.substr(6, func.size() - 6);
+			num2 = std::stoi(num);
 
-	//	}*/
-	//	
-	//	else if (func == "sort")
-	//	{
-
-	//	}
-	//	
-	//	else if (func == "clean")
-	//	{
-
-	//	}
-	//	
-	//	else if (func == "help")
-	//	{
-
-	//	}
-	//	
-	//	/*else if (func == sum1 + " " + sum2)
-	//	{
-	//		
-	//	}*/
-	//}
+			info(num2);
+		}
+		
+		else if (func == "sort")
+		{
+			sort();
+		}
+		
+		else if (func == "clean")
+		{
+			clean();
+		}
+		
+		else if (func == "help")
+		{
+			help();
+		}
+		
+		else if (func == "%d %d")
+		{
+			std::string snum1, snum2;
+			int num1, num2;
+			snum1 = func.substr(0, func.size() - func.find(" "));
+			num1 = std::stoi(snum1);
+			
+			snum2 = func.substr(func.size() - func.find(" "), func.size());
+			num2 = std::stoi(snum2);
+		}
+	}
 
 	return 0;
 
