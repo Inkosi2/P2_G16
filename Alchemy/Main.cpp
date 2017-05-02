@@ -54,7 +54,8 @@ void del(int aux)
 void info(int elem)
 {
 	std::string url = "https://en.wikipedia.org/wiki/" + list[elem - 1];
-	ShellExecuteA(nullptr, "open", url.c_str(), nullptr, nullptr, SW_SHOWNORMAL);}
+	ShellExecuteA(nullptr, "open", url.c_str(), nullptr, nullptr, SW_SHOWNORMAL);
+}
 
 void sort()
 {
@@ -77,6 +78,11 @@ void clean()
 
 void help()
 {
+	//---------------------------------
+	//------ COUT de la interfaz ------
+	//---------------------------------
+
+	std::cout << "Alchemy";
 
 }
 
@@ -128,22 +134,15 @@ int main()
 	int sum1, sum2;
 
 	config();
-	add_basics();
-	//sort();
-	del(3);
-	clean();
-
+	help();
 	print();
-
-
-	//---------------------------------
-	//------ COUT de la interfaz ------
-	//---------------------------------
 
 	while (true)
 	{
 		std::cin >> func;
 		std::cout << std::endl;
+
+		system("cls");
 
 		if (func == "add %d") 
 		{
@@ -156,7 +155,7 @@ int main()
 
 		}
 		
-		else if (func == "add basics")
+		else if (func == "addbasics")
 		{
 			add_basics();
 		}
@@ -206,6 +205,8 @@ int main()
 			snum2 = func.substr(func.size() - func.find(" "), func.size());
 			num2 = std::stoi(snum2);
 		}
+
+		print();
 	}
 
 	return 0;
