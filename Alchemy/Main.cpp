@@ -29,7 +29,10 @@ std::unordered_map <suma, std::string, pair_hash> elementos;
 
 void add(int elem) // Y
 {
-	list.insert(list.end(), list[elem - 1]);
+	if (elem - 1 < list.size())
+	{
+		list.insert(list.end(), list[elem - 1]);
+	}
 }
 
 void add_basics() //Y
@@ -42,13 +45,19 @@ void add_basics() //Y
 
 void del(int aux) //Y
 {
-	list.erase(list.begin() + aux - 1);
+	if (aux - 1 < list.size())
+	{
+		list.erase(list.begin() + aux - 1);
+	}
 }
 
 void info(int elem) //Y
 {
-	std::string url = "https://en.wikipedia.org/wiki/" + list[elem - 1];
-	ShellExecuteA(nullptr, "open", url.c_str(), nullptr, nullptr, SW_SHOWNORMAL);
+	if (elem - 1 < list.size())
+	{
+		std::string url = "https://en.wikipedia.org/wiki/" + list[elem - 1];
+		ShellExecuteA(nullptr, "open", url.c_str(), nullptr, nullptr, SW_SHOWNORMAL);
+	}
 }
 
 void sort() //Y
@@ -59,7 +68,7 @@ void sort() //Y
 void clean() //Y
 {
 	sort();
-	for (int i = 0; i < list.size(); i++)
+	/*for (int i = 0; i < list.size(); i++)
 	{
 		for (int j = i + 1; j < list.size(); j++)
 		{
@@ -68,14 +77,15 @@ void clean() //Y
 				del(j);
 			}
 		}
-	}
+	}*/
+	list.erase(unique(list.begin(), list.end()), list.end());
 }
 
 void help() //Y
 {
-	std::cout << "------------------" << std::endl;
-	std::cout << "FULLENTI ALCHEMIST" << std::endl;
-	std::cout << "------------------" << std::endl;
+	std::cout << "--------------------------------------------------------" << std::endl;
+	std::cout << "------------------ FULLENTI ALCHEMIST ------------------" << std::endl;
+	std::cout << "--------------------------------------------------------" << std::endl;
 	std::cout << "- Enter two numbers of your elements list to combine them." << std::endl;
 	std::cout << "- Enter the word 'add' and the number of an element to add a new instance of that element." << std::endl;
 	std::cout << "- Enter 'add basics' to add new instances of the 4 basic elements." << std::endl;
@@ -88,45 +98,70 @@ void help() //Y
 
 }
 
-//void combine(int elem1, int elem2)
-//{
-//	suma resultado;
-//	std::string sum;
-//
-//	resultado.first = list[elem1 - 1];
-//	resultado.second = list[elem2 - 1];
-//	
-//	sum = resultado.first + resultado.second;
-//
-//	list.insert(list.end(), sum);
-//
-//	del(elem2);
-//	del(elem1);
-//}
+/*void combine(int elem1, int elem2)
+{
+	suma resultado;
+	std::string sum;
+
+	resultado.first = list[elem1 - 1];
+	resultado.second = list[elem2 - 1];
+	
+	sum = resultado.first + resultado.second;
+
+	list.insert(list.end(), sum);
+
+	del(elem2);
+	del(elem1);
+}*/
 
 void combo(int e1, int e2)
 {
 	suma clave;
-	if (e1 != e2)
+	if (e1 != e2 && e1 - 1 < list.size() && e2 - 1 < list.size())
 	{
 		clave.first = list[e1 - 1];
 		clave.second = list[e2 - 1];
 
 		auto pos = elementos.find({ clave.first, clave.second });
 
-		if (!elementos.count(clave))
+		if (pos == elementos.end())
 		{
-			clave.first = list[e2 - 1];
-			clave.second = list[e1 - 1];
-			pos = elementos.find({ clave.first, clave.second });
+			pos = elementos.find({ clave.second, clave.first});
 		}
 
-		if (elementos.count(clave))
-		{
-			list.insert(list.end(), pos->second);
-			del(e1);
-			del(e2);
+		if (pos != elementos.end() && (pos == elementos.find({ clave.first, clave.second }) || pos == elementos.find({ clave.second, clave.first }))) {
+			/*if (!elementos.count(clave))
+			{
+				clave.first = list[e2 - 1];
+				clave.second = list[e1 - 1];
+				pos = elementos.find({ clave.first, clave.second });
+			}
+
+			if (elementos.count(clave))
+			{
+				list.insert(list.end(), pos->second);
+				del(e1);
+				del(e2);
+			}*/
+			list.push_back(pos->second);
+			if (e1 > e2)
+			{
+				del(e1);
+				del(e2);
+			}
+			else 
+			{
+				del(e2);
+				del(e1);
+			}
 		}
+		else
+		{
+			
+		}
+	}
+	else
+	{
 
 	}
 }
